@@ -19,3 +19,4 @@ app.listen(3000, "0.0.0.0", () => {
 });
 app.use(express.json());
 app.use("/patients", require("./routes/patientRoutes"));
+app.use("/auth", require("./routes/authRoutes"));
