@@ -33,5 +33,5 @@ jobs:
             docker rm $(docker ps -aq) || true
             docker pull akash112005/hospital-app
             docker run -d -p 3000:3000 \
-              -e MONGO_URI="your_mongodb_connection_string" \
+              -e MONGO_URI=mongodb+srv://akashUser:akash123@cluster0.lhizrdv.mongodb.net/?appName=Cluster0 \
               akash112005/hospital-app
