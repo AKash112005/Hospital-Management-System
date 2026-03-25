@@ -48,5 +48,6 @@ resource "aws_instance" "hospital_server" {
 
   tags = {
     Name = "Hospital-Server"
+
   }
 }
