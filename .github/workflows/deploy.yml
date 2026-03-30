@@ -40,10 +40,5 @@ jobs:
             docker rm $(docker ps -aq) || true
             docker pull akash112005/hospital-app
             docker run -d -p 3000:3000 \
-<<<<<<< HEAD
-              -e MONGO_URI=mongodb+srv://akashUser:akash123@cluster0.lhizrdv.mongodb.net/?appName=Cluster0 \
-              akash112005/hospital-app
-=======
               -e MONGO_URI="${{ secrets.MONGO_URI }}" \
               akash112005/hospital-app
->>>>>>> f2e3b92 (SSH Resolved)
