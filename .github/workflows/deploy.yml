@@ -10,24 +10,30 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # 1️⃣ Checkout code
       - name: Checkout code
         uses: actions/checkout@v3
 
+      # 2️⃣ Docker login
       - name: Login to Docker Hub
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
+      # 3️⃣ Build Docker image (IMPORTANT: ./app)
       - name: Build Docker image
         run: docker build -t akash112005/hospital-app ./app
 
+      # 4️⃣ Push Docker image
       - name: Push Docker image
         run: docker push akash112005/hospital-app
 
-      # 🔥 FIXED SSH KEY METHOD
-      - name: Create SSH key file
+      # 5️⃣ Decode SSH key (BASE64 FIX)
+      - name: Decode SSH key
         run: |
-          echo "${{ secrets.EC2_SSH_KEY }}" > key.pem
+          echo "${{ secrets.EC2_SSH_KEY_BASE64 }}" > key.b64
+          base64 -d key.b64 > key.pem
           chmod 600 key.pem
 
+      # 6️⃣ Deploy to EC2
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v0.1.6
         with:
