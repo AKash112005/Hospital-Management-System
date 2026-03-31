@@ -1,23 +1,23 @@
 require("dotenv").config();
+
 const express = require("express");
-const connectDB = require("./config/db");
 const cors = require("cors");
-app.use(cors());
-const app = express();
 
-// Connect DB
-connectDB();
+const app = express();   // ✅ create app FIRST
 
+app.use(cors());         // ✅ then use middleware
 app.use(express.json());
 
-// Test route
-app.get("/", (req, res) => {
-  res.send("Hospital API Running 🚀");
-});
+// routes
+const authRoutes = require("./routes/authRoutes");
+const patientRoutes = require("./routes/patientRoutes");
 
-app.listen(3000, "0.0.0.0", () => {
-  console.log("Server running on port 3000");
+app.use("/auth", authRoutes);
+app.use("/patients", patientRoutes);
+
+// start server
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
-app.use(express.json());
-app.use("/patients", require("./routes/patientRoutes"));
-app.use("/auth", require("./routes/authRoutes"));
